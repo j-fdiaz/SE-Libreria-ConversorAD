@@ -10,14 +10,10 @@
  *
  * */
 
-#include <types.h>
-#include <sys/param.h>
-#include <sys/interrupts.h>
-#include <sys/sio.h>
-#include <sys/locks.h>
+#include "ad.h"
 
 #define TRUE 1
-#define FALSE 0
+#define false 0
 
 uint8_t mi_CTL3 = 0;
 uint8_t mi_CTL4 = 0;
@@ -41,7 +37,7 @@ uint8_t ad_conf_bits(uint8_t bits_conversion) {
     mi_CTL4 |= M6812B_RES10;
     return TRUE;
   } else 
-    return FALSE;
+    return false;
 }
 
 // configurar tiempo de muestreo
@@ -62,7 +58,7 @@ uint8_t ad_conf_tiempo_muestreo(uint8_t tiempo_muestreo) {
     mi_CTL4 |= M6812B_SMP1 | M6812B_SMP0;
     return TRUE;
   default:
-    return FALSE;
+    return false;
   }
 }
 
@@ -81,7 +77,7 @@ uint8_t ad_conf_num_conversiones(uint8_t conversiones) {
     mi_CTL5 |= M6812B_S8C;
     return TRUE;
   default:
-    return FALSE;
+    return false;
   }
 }
 
@@ -108,6 +104,13 @@ uint8_t ad_activa_lectura_continua(uint8_t modo) {
   else
     mi_CTL5 |= M6812B_SCAN;
   return TRUE;
+}
+
+// Sube los registros a la placa
+void ad_push_configuracion() {
+  _io_ports[M6812_ATD0CTL3 + dir_ad] = mi_CTL3;
+  _io_ports[M6812_ATD0CTL4 + dir_ad] = mi_CTL4;
+  _io_ports[M6812_ATD0CTL5 + dir_ad] = mi_CTL5;
 }
 
 // iniciar la conversión
