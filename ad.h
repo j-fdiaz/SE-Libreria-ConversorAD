@@ -37,17 +37,14 @@ uint8_t ad_conf_pin_inicio(uint8_t);
 // configurar el modo de conversión continua (SCAN)
 uint8_t ad_activa_lectura_continua(uint8_t);
 
-// Sube los registros a la placa
-void ad_push_configuracion();
-
 // iniciar la conversión
-uint8_t ad_inicia_conversion();
+void ad_inicia_conversion();
 
 // esperar a que termine conversión
-uint8_t ad_espera_conversion();
+void ad_espera_conversion();
 
 // devolver los valores leídos
-uint8_t ad_recupera_conversion(uint16_t*);
+void ad_recupera_conversion(uint16_t*);
 
 // instalar función manejadora para cuando termine conversión
-uint9_t ad_ejecuta_funcion(void*);
+void ad_ejecuta_funcion(void (*)(void));

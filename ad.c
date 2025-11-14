@@ -20,7 +20,7 @@ uint8_t mi_CTL4 = 0;
 uint8_t mi_CTL5 = 0;
 uint8_t dir_ad = 0;
 uint8_t num_conversiones = 0;
-void (*)(uint16_t) func_glob;
+void (*)(void) func_glob;
 
 // elegir puerto de conversion
 uint8_t ad_conf_puerto(uint8_t puerto) {
@@ -118,37 +118,33 @@ void ad_inicia_conversion() {
 }
 
 // esperar a que termine conversión
-uint8_t ad_espera_conversion() {
+void ad_espera_conversion() {
   while(! (_io_ports[M6812_ATD0STAT0 + DirAD] & M6812B_SCF));
 }
 
 // devolver los valores leídos
-uint8_t ad_recupera_conversion(uint16_t* resul, uint8_t cantidad) {
+void ad_recupera_conversion(uint16_t* resul, uint8_t cantidad) {
   cantidad &= (0x07); // cantidad = cantidad % 8
   for (int i = 0; i < cantidad; ++i) {
     resul[i] = _IO_PORTS_W(M6812_ADR00H + dir_ad + i * 2);
   }
 }
 
+// funcion ejecutada al saltar una
+// interrupcion del Conversor AD
 void __attribute__((interrupt)) vi_atd(void) {
-  uint16_t[num_conversiones] resul;
-  ad_recupera_conversion(resul, num_conversiones);
-
-  func_global()
+  func_global();
 }
 
 // instalar función manejadora para cuando termine conversión
 //  Función que recibe un puntero a una función, tiene que activar
 //  interrupciones. Solo se ejecuta la función recibida cuando
 //  recibe la interrupción (al terminar la conversión)
-uint8_t ad_funcion_manejadora(void (*func)(uint16_t)) {
-  // Activamos las interrupciones para el conversor AD
+void ad_funcion_manejadora(void (*func)(void)) {
   func_glob = func;
+  // Activamos las interrupciones para el conversor AD
   _io_ports[M6812_ATD0CTL2 + dir_ad] |= M6812B_ASCIE;
   ad_inicia_conversion();
-
-
-  
-  // desactivamos las interrupciones para el conversor AD
+  // Desactivamos las interrupciones para el conversor AD
   _io_ports[M6812_ATD0CTL2 + dir_ad] &= ~M6812B_ASCIE;
 }
