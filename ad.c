@@ -23,9 +23,8 @@ uint8_t num_conversiones = 0;
 void (*)(void) func_glob;
 
 // elegir puerto de conversion
-uint8_t ad_conf_puerto(uint8_t puerto) {
+void ad_conf_puerto(uint8_t puerto) {
   dir_ad = (puerto == 0)?0:(M6812_ATD1CTL0 - M6812_ATD0CTL0);
-  return TRUE;
 }
 
 // configurar conversión de 8 o 10 bits
@@ -85,12 +84,11 @@ uint8_t ad_conf_num_conversiones(uint8_t conversiones) {
 }
 
 // configurar modo de lectura: único pin, pines sucesivos
-uint8_t ad_activar_lectura_pines_sucesivos(uint8_t modo) {
+void ad_activar_lectura_pines_sucesivos(uint8_t modo) {
   if (modo == 0)
     mi_CTL5 &= ~M6812B_MULT;
   else
     mi_CTL5 |= M6812B_MULT;
-  return TRUE;
 }
 
 // configurar pin de inicio
