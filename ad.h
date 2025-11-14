@@ -50,3 +50,4 @@ uint8_t ad_espera_conversion();
 uint8_t ad_recupera_conversion(uint16_t*);
 
 // instalar función manejadora para cuando termine conversión
+uint9_t ad_ejecuta_funcion(void*);
