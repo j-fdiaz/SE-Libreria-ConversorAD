@@ -12,15 +12,17 @@
 
 #include "ad.h"
 
-#define TRUE 1
-#define false 0
-
 uint8_t mi_CTL3 = 0;
 uint8_t mi_CTL4 = 0;
 uint8_t mi_CTL5 = 0;
 uint8_t dir_ad = 0;
 uint8_t num_conversiones = 0;
-void (*)(void) func_glob;
+void (*func_glob)(void);
+
+// GetDirAd
+uint8_t ad_get_dir_ad(void) {
+  return dir_ad;
+} 
 
 // elegir puerto de conversion
 void ad_conf_puerto(uint8_t puerto) {
@@ -38,7 +40,7 @@ uint8_t ad_conf_bits(uint8_t bits_conversion) {
     mi_CTL4 |= M6812B_RES10;
     return TRUE;
   } else 
-    return false;
+    return FALSE;
 }
 
 // configurar tiempo de muestreo
@@ -59,7 +61,7 @@ uint8_t ad_conf_tiempo_muestreo(uint8_t tiempo_muestreo) {
     mi_CTL4 |= M6812B_SMP1 | M6812B_SMP0;
     return TRUE;
   default:
-    return false;
+    return FALSE;
   }
 }
 
@@ -79,7 +81,7 @@ uint8_t ad_conf_num_conversiones(uint8_t conversiones) {
     mi_CTL5 |= M6812B_S8C;
     return TRUE;
   default:
-    return false;
+    return FALSE;
   }
 }
 
@@ -117,21 +119,26 @@ void ad_inicia_conversion() {
 
 // esperar a que termine conversión
 void ad_espera_conversion() {
-  while(! (_io_ports[M6812_ATD0STAT0 + DirAD] & M6812B_SCF));
+  while(! (_io_ports[M6812_ATD0STAT0 + dir_ad] & M6812B_SCF));
 }
 
-// devolver los valores leídos
-void ad_recupera_conversion(uint16_t* resul, uint8_t cantidad) {
+// devolver los valores de resultado
+void ad_recupera_conversiones(uint16_t* resul, uint8_t cantidad) {
   cantidad &= (0x07); // cantidad = cantidad % 8
   for (int i = 0; i < cantidad; ++i) {
     resul[i] = _IO_PORTS_W(M6812_ADR00H + dir_ad + i * 2);
   }
 }
 
+// devolver el valor de resultado
+void ad_recupera_conversion(uint16_t* resul) {
+  *resul = _IO_PORTS_W(M6812_ADR00H + dir_ad);
+}
+
 // funcion ejecutada al saltar una
 // interrupcion del Conversor AD
 void __attribute__((interrupt)) vi_atd(void) {
-  func_global();
+  func_glob();
 }
 
 // instalar función manejadora para cuando termine conversión

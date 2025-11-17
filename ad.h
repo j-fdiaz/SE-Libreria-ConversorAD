@@ -25,6 +25,14 @@
   @{
  */
 
+/*! dir_ad getter
+  
+  Devuelve el valor de dir_ad
+
+  @return Valor actual de dir_ad
+ */
+uint8_t ad_get_dir_ad(void);
+
 /*! Elegir puerto.
   
   Configura el puerto a utilizar.
@@ -144,7 +152,16 @@ void ad_espera_conversion();
   recuperan sólo 8 conversiones.
 
  */
-void ad_recupera_conversion(uint16_t* resul, uint8_t cantidad);
+void ad_recupera_conversiones(uint16_t* resul, uint8_t cantidad);
+
+/*! Recuperar resultados de la conversión
+
+  Recupera los resultados de la conversión A/D.
+
+  @param resul Variable donde se van a
+  almacenar los resultados.
+ */
+void ad_recupera_conversion(uint16_t* resul);
 
 /*! Ejecutar función tras conversión A/D
 
