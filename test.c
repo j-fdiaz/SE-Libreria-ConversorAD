@@ -12,8 +12,8 @@
 
 #include "ad.h"
 
-void passed() { serial_print("Test PASSED\n"); }
-void failed() { serial_print("Test FAILED\n"); }
+void passed() { serial_print("Test PASSED\r\n"); }
+void failed() { serial_print("Test FAILED\r\n"); }
 void endl() { serial_print("\n"); }
 
 int main() {
@@ -92,7 +92,6 @@ int main() {
   } else
     failed();
 
-
   // ==== TEST uint8_t ad_conf_tiempo_muestreo(uint8_t); ====
   serial_print("Testing ad_conf_tiempo_muestreo(uint8_t)");
   serial_print("Test ad_conf_tiempo_muestreo(2): puerto 0");
@@ -101,23 +100,27 @@ int main() {
     ad_inicia_conversion();
     if (!(_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP1) &&
         !(_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP0)) {
-      // Si ad_conf_tiempo_muestreo fue satisfacorio 
-      // y los bits SMP1-SMP0 están a 00 
+      // Si ad_conf_tiempo_muestreo fue satisfacorio
+      // y los bits SMP1-SMP0 están a 00
       passed();
-    } else failed();
-  } else failed();
-  
+    } else
+      failed();
+  } else
+    failed();
+
   serial_print("Test ad_conf_tiempo_muestreo(2): puerto 1");
   ad_conf_puerto(1);
   if (ad_conf_tiempo_muestreo(2)) {
     ad_inicia_conversion();
     if (!(_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP1) &&
         !(_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP0)) {
-      // Si ad_conf_tiempo_muestreo fue satisfacorio 
-      // y los bits SMP1-SMP0 están a 00 
+      // Si ad_conf_tiempo_muestreo fue satisfacorio
+      // y los bits SMP1-SMP0 están a 00
       passed();
-    } else failed();
-  } else failed();
+    } else
+      failed();
+  } else
+    failed();
 
   serial_print("Test ad_conf_tiempo_muestreo(4): puerto 0");
   ad_conf_puerto(0);
@@ -125,23 +128,27 @@ int main() {
     ad_inicia_conversion();
     if (!(_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP1) &&
         (_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP0)) {
-      // Si ad_conf_tiempo_muestreo fue satisfacorio 
-      // y los bits SMP1-SMP0 están a 01 
+      // Si ad_conf_tiempo_muestreo fue satisfacorio
+      // y los bits SMP1-SMP0 están a 01
       passed();
-    } else failed();
-  } else failed();
-  
+    } else
+      failed();
+  } else
+    failed();
+
   serial_print("Test ad_conf_tiempo_muestreo(4): puerto 1");
   ad_conf_puerto(1);
   if (ad_conf_tiempo_muestreo(4)) {
     ad_inicia_conversion();
     if (!(_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP1) &&
         (_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP0)) {
-      // Si ad_conf_tiempo_muestreo fue satisfacorio 
-      // y los bits SMP1-SMP0 están a 01 
+      // Si ad_conf_tiempo_muestreo fue satisfacorio
+      // y los bits SMP1-SMP0 están a 01
       passed();
-    } else failed();
-  } else failed();
+    } else
+      failed();
+  } else
+    failed();
 
   serial_print("Test ad_conf_tiempo_muestreo(8): puerto 0");
   ad_conf_puerto(0);
@@ -149,53 +156,61 @@ int main() {
     ad_inicia_conversion();
     if ((_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP1) &&
         !(_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP0)) {
-      // Si ad_conf_tiempo_muestreo fue satisfacorio 
-      // y los bits SMP1-SMP0 están a 10 
+      // Si ad_conf_tiempo_muestreo fue satisfacorio
+      // y los bits SMP1-SMP0 están a 10
       passed();
-    } else failed();
-  } else failed();
-  
+    } else
+      failed();
+  } else
+    failed();
+
   serial_print("Test ad_conf_tiempo_muestreo(8): puerto 1");
   ad_conf_puerto(1);
   if (ad_conf_tiempo_muestreo(8)) {
     ad_inicia_conversion();
     if ((_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP1) &&
         !(_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP0)) {
-      // Si ad_conf_tiempo_muestreo fue satisfacorio 
-      // y los bits SMP1-SMP0 están a 10 
+      // Si ad_conf_tiempo_muestreo fue satisfacorio
+      // y los bits SMP1-SMP0 están a 10
       passed();
-    } else failed();
-  } else failed();
-  
+    } else
+      failed();
+  } else
+    failed();
+
   serial_print("Test ad_conf_tiempo_muestreo(16): puerto 0");
   ad_conf_puerto(0);
   if (ad_conf_tiempo_muestreo(16)) {
     ad_inicia_conversion();
     if ((_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP1) &&
         (_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP0)) {
-      // Si ad_conf_tiempo_muestreo fue satisfacorio 
-      // y los bits SMP1-SMP0 están a 11 
+      // Si ad_conf_tiempo_muestreo fue satisfacorio
+      // y los bits SMP1-SMP0 están a 11
       passed();
-    } else failed();
-  } else failed();
-  
+    } else
+      failed();
+  } else
+    failed();
+
   serial_print("Test ad_conf_tiempo_muestreo(16): puerto 1");
   ad_conf_puerto(1);
   if (ad_conf_tiempo_muestreo(16)) {
     ad_inicia_conversion();
     if ((_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP1) &&
         (_io_ports[M6812_ATD0CTL4 + ad_get_dir_ad()] & M6812B_SMP0)) {
-      // Si ad_conf_tiempo_muestreo fue satisfacorio 
-      // y los bits SMP1-SMP0 están a 11 
+      // Si ad_conf_tiempo_muestreo fue satisfacorio
+      // y los bits SMP1-SMP0 están a 11
       passed();
-    } else failed();
-  } else failed();
+    } else
+      failed();
+  } else
+    failed();
 
   serial_print("Test ad_conf_tiempo_muestreo(23):");
   if (!ad_conf_tiempo_muestreo(23)) {
-      passed();
-  } else failed();
-  
+    passed();
+  } else
+    failed();
 
   // ==== TEST uint8_t ad_conf_num_conversiones(uint8_t); ====
   serial_print("Testing ad_conf_num_conversiones(uint8_t)");
@@ -205,23 +220,27 @@ int main() {
     ad_inicia_conversion();
     if (!(_io_ports[M6812_ATD0CTL3 + ad_get_dir_ad()] & M6812B_S8C) &&
         (_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_S1C)) {
-      // Si ad_conf_num_conversiones fue satisfacorio 
+      // Si ad_conf_num_conversiones fue satisfacorio
       // y los bits S8C-S1C están a 01
       passed();
-    } else failed();
-  } else failed();
-  
+    } else
+      failed();
+  } else
+    failed();
+
   serial_print("Test ad_conf_num_conversiones(1): puerto 1");
   ad_conf_puerto(1);
   if (ad_conf_num_conversiones(1)) {
     ad_inicia_conversion();
     if (!(_io_ports[M6812_ATD0CTL3 + ad_get_dir_ad()] & M6812B_S8C) &&
         (_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_S1C)) {
-      // Si ad_conf_num_conversiones fue satisfacorio 
+      // Si ad_conf_num_conversiones fue satisfacorio
       // y los bits S8C-S1C están a 01
       passed();
-    } else failed();
-  } else failed();
+    } else
+      failed();
+  } else
+    failed();
 
   serial_print("Test ad_conf_num_conversiones(4): puerto 0");
   ad_conf_puerto(0);
@@ -229,112 +248,115 @@ int main() {
     ad_inicia_conversion();
     if (!(_io_ports[M6812_ATD0CTL3 + ad_get_dir_ad()] & M6812B_S8C) &&
         !(_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_S1C)) {
-      // Si ad_conf_num_conversiones fue satisfacorio 
+      // Si ad_conf_num_conversiones fue satisfacorio
       // y los bits S8C-S1C están a 00
       passed();
-    } else failed();
-  } else failed();
-  
+    } else
+      failed();
+  } else
+    failed();
+
   serial_print("Test ad_conf_num_conversiones(4): puerto 1");
   ad_conf_puerto(1);
   if (ad_conf_num_conversiones(4)) {
     ad_inicia_conversion();
     if (!(_io_ports[M6812_ATD0CTL3 + ad_get_dir_ad()] & M6812B_S8C) &&
         !(_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_S1C)) {
-      // Si ad_conf_num_conversiones fue satisfacorio 
+      // Si ad_conf_num_conversiones fue satisfacorio
       // y los bits S8C-S1C están a 00
       passed();
-    } else failed();
-  } else failed();
-  
+    } else
+      failed();
+  } else
+    failed();
+
   serial_print("Test ad_conf_num_conversiones(8): puerto 0");
   ad_conf_puerto(0);
   if (ad_conf_num_conversiones(8)) {
     ad_inicia_conversion();
     if ((_io_ports[M6812_ATD0CTL3 + ad_get_dir_ad()] & M6812B_S8C)) {
-      // Si ad_conf_num_conversiones fue satisfacorio 
+      // Si ad_conf_num_conversiones fue satisfacorio
       // y los bits S8C-S1C están a 1X
       passed();
-    } else failed();
-  } else failed();
-  
+    } else
+      failed();
+  } else
+    failed();
+
   serial_print("Test ad_conf_num_conversiones(8): puerto 1");
   ad_conf_puerto(1);
   if (ad_conf_num_conversiones(8)) {
     ad_inicia_conversion();
     if ((_io_ports[M6812_ATD0CTL3 + ad_get_dir_ad()] & M6812B_S8C)) {
-      // Si ad_conf_num_conversiones fue satisfacorio 
+      // Si ad_conf_num_conversiones fue satisfacorio
       // y los bits S8C-S1C están a 1X
       passed();
-    } else failed();
-  } else failed();
+    } else
+      failed();
+  } else
+    failed();
 
+  // ==== TEST uint8_t ad_activar_lectura_pines_sucesivos(uint8_t); ====
+  serial_print("Testing ad_activar_lectura_pines_sucesivos(uint8_t)");
+  serial_print("Test ad_activar_lectura_pines_sucesivos(0) puerto 0: ");
+  ad_conf_puerto(0);
+  ad_activar_lectura_pines_sucesivos(0) ad_inicia_conversion();
+  if (!(_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT)) {
+    // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está
+    // a 0
+    passed();
+  } else
+    failed();
 
-  // // ==== TEST uint8_t ad_activar_lectura_pines_sucesivos(uint8_t); ====
-  // serial_print("Testing ad_activar_lectura_pines_sucesivos(uint8_t)");
-  // serial_print("Test ad_activar_lectura_pines_sucesivos(0) puerto 0: ");
-  // ad_conf_puerto(0);
-  // if (ad_activar_lectura_pines_sucesivos(0)) {
-  //   ad_inicia_conversion();
-  //   if (!(_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT)) {
-  //     // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está a 0
-  //     passed();
-  //   } else
-  //     failed();
-  // } else
-  //   failed();
+  serial_print("Test ad_activar_lectura_pines_sucesivos(0) puerto 1: ");
+  ad_conf_puerto(1);
+  ad_activar_lectura_pines_sucesivos(0) ad_inicia_conversion();
+  if (!(_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT)) {
+    // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está
+    // a 0
+    passed();
+  } else
+    failed();
 
-  // serial_print("Test ad_activar_lectura_pines_sucesivos(0) puerto 1: ");
-  // ad_conf_puerto(1);
-  // if (ad_activar_lectura_pines_sucesivos(0)) {
-  //   ad_inicia_conversion();
-  //   if (!(_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT)) {
-  //     // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está a 0
-  //     passed();
-  //   } else
-  //     failed();
-  // } else
-  //   failed();
+  serial_print("Test ad_activar_lectura_pines_sucesivos(1) puerto 0: ");
+  ad_conf_puerto(0);
+  ad_activar_lectura_pines_sucesivos(1) ad_inicia_conversion();
+  if (_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT) {
+    // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está
+    // a 1
+    passed();
+  } else
+    failed();
 
-  // serial_print("Test ad_activar_lectura_pines_sucesivos(1) puerto 0: ");
-  // ad_conf_puerto(0);
-  // if (ad_activar_lectura_pines_sucesivos(1)) {
-  //   ad_inicia_conversion();
-  //   if (_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT) {
-  //     // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está a 1
-  //     passed();
-  //   } else failed();
-  // } else failed();
+  serial_print("Test ad_activar_lectura_pines_sucesivos(1) puerto 1: ");
+  ad_conf_puerto(1);
+  ad_activar_lectura_pines_sucesivos(1) ad_inicia_conversion();
+  if (_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT) {
+    // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está
+    // a 1
+    passed();
+  } else
+    failed();
 
-  // serial_print("Test ad_activar_lectura_pines_sucesivos(1) puerto 1: ");
-  // ad_conf_puerto(1);
-  // if (ad_activar_lectura_pines_sucesivos(1)) {
-  //   ad_inicia_conversion();
-  //   if (_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT) {
-  //     // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está a 1
-  //     passed();
-  //   } else failed();
-  // } else failed();
+  serial_print("Test ad_activar_lectura_pines_sucesivos(23) puerto 0: ");
+  ad_conf_puerto(0);
+  ad_activar_lectura_pines_sucesivos(23) ad_inicia_conversion();
+  if (_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT) {
+    // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está
+    // a 1
+    passed();
+  } else
+    failed();
 
-  // serial_print("Test ad_activar_lectura_pines_sucesivos(23) puerto 0: ");
-  // ad_conf_puerto(0);
-  // if (ad_activar_lectura_pines_sucesivos(23)) {
-  //   ad_inicia_conversion();
-  //   if (_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT) {
-  //     // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está a 1
-  //     passed();
-  //   } else failed();
-  // } else failed();
-
-  // serial_print("Test ad_activar_lectura_pines_sucesivos(23) puerto 1: ");
-  // ad_conf_puerto(1);
-  // if (ad_activar_lectura_pines_sucesivos(23)) {
-  //   ad_inicia_conversion();
-  //   if (_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT) {
-  //     // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está a 1
-  //     passed();
-  //   } else failed();
-  // } else failed();
+  serial_print("Test ad_activar_lectura_pines_sucesivos(23) puerto 1: ");
+  ad_conf_puerto(1);
+  ad_activar_lectura_pines_sucesivos(23) ad_inicia_conversion();
+  if (_io_ports[M6812_ATD0CTL5 + ad_get_dir_ad()] & M6812B_MULT) {
+    // Si ad_activar_lectura_pines_sucesivos fue satisfacorio y el bit MULT está
+    // a 1
+    passed();
+  } else
+    failed();
 
   // ==== TEST uint8_t ad_conf_pin_inicio(uint8_t); ====
 
